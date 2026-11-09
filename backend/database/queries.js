@@ -26,4 +26,17 @@ export const queries = {
         fecha_revision = GETDATE()
     WHERE id = @id
   `,
+
+  obtenerUsuarioPorEmail: `
+  SELECT
+    id,
+    nombre,
+    apellido,
+    email,
+    rol,
+    activo,
+    password_hash
+  FROM usuarios
+  WHERE email = @email
+`
 };

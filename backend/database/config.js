@@ -5,13 +5,10 @@ dotenv.config();
 export const PORT = process.env.PORT || 3000;
 
 export const dbConfig = {
-  server: process.env.DB_SERVER || 'localhost',
-  port: parseInt(process.env.DB_PORT || '1433', 10),
+  server: process.env.DB_SERVER || 'localhost\\SQLEXPRESS',
   database: process.env.DB_NAME || 'sistema_asistencia',
-  user: process.env.DB_USER || 'sa',
-  password: process.env.DB_PASSWORD || '',
   options: {
-    encrypt: process.env.DB_ENCRYPT === 'true',
+    encrypt: false,
     trustServerCertificate: true,
   },
   pool: {
