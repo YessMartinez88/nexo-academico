@@ -325,21 +325,14 @@ git status
 git add -A
 git commit -m "Punto de control antes de actualizar dependencias"
 ```
+## Flujo de trabajo con ramas
 
----
+Para evitar que los cambios de un integrante afecten el trabajo de los demás, el proyecto utiliza tres niveles de ramas:
 
-## Relación con las consignas
+```text
+main
+  └── develop
+        └── feature/nombre-de-la-funcionalidad
 
-El proyecto contempla los requisitos principales del TP Integrador:
-
-- Frontend desarrollado con Angular.
-- Componentes y navegación.
-- Consumo de APIs mediante servicios.
-- Backend desarrollado con Node.js y Express.
-- Arquitectura Router–Controller–Service–Repository.
-- Persistencia en SQL Server.
-- Endpoints HTTP para las funcionalidades del sistema.
-- Trabajo colaborativo mediante Git y GitHub.
-- Participación individual mediante componentes, endpoints y ramas de funcionalidad.
 
 Las funcionalidades deben marcarse como implementadas en la documentación únicamente después de ser desarrolladas, probadas y conectadas con la base de datos.
