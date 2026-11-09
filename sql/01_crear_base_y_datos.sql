@@ -1,5 +1,14 @@
 -- Nexo-Academico: Esquema Inicial de Base de Datos (SQL Server)
 
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'sistema_asistencia')
+BEGIN
+    CREATE DATABASE sistema_asistencia;
+END
+GO
+
+USE sistema_asistencia;
+GO
+
 -- 1. Tabla de Usuarios
 CREATE TABLE usuarios (
     id VARCHAR(50) PRIMARY KEY,

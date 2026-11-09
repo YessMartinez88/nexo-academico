@@ -1,5 +1,8 @@
 -- Nexo-Academico: Datos Semilla (Seeds)
 
+USE sistema_asistencia;
+GO
+
 INSERT INTO usuarios (id, nombre, apellido, email, rol) VALUES
 ('usr-admin', 'Martina', 'Costa', 'admin@instituto.edu.ar', 'ADMIN'),
 ('usr-docente', 'Laura', 'Méndez', 'docente@instituto.edu.ar', 'DOCENTE'),

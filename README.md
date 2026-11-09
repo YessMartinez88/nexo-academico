@@ -21,7 +21,7 @@ Proyecto desarrollado como Trabajo Práctico Integrador para las materias **Desa
 ## Tecnologías Utilizadas
 
 - **Frontend:** Angular 18, TypeScript, HTML5, CSS3, Angular Router, HttpClient.
-- **Backend:** Node.js, Express, TypeScript.
+- **Backend:** Node.js, Express (ES Modules).
 - **Arquitectura Backend:** Router $\rightarrow$ Controller $\rightarrow$ Service $\rightarrow$ Repository.
 - **Base de Datos:** Microsoft SQL Server (`mssql`), consultas desacopladas y transacciones atómicas.
 - **API Externa:** [ArgentinaDatos - Feriados Nacionales](https://argentinadatos.com/docs/operations/get-feriados) (`GET /v1/feriados/{año}`).
@@ -80,3 +80,25 @@ $$\text{Porcentaje} = \left( \frac{\text{Clases Dictadas} - \text{Faltas Computa
 ```bash
 git clone https://github.com/YessMartinez88/nexo-academico.git
 cd Nexo-Academico
+```
+
+### 2. Configurar la Base de Datos (SQL Server)
+Ejecutar en SQL Server Management Studio (SSMS) los scripts ubicados en la carpeta `sql/` en el siguiente orden:
+1. `sql/01_crear_base_y_datos.sql`
+2. `sql/02_datos_semilla.sql`
+
+### 3. Levantar el Backend
+```bash
+cd backend
+cp .env.example .env
+# Editar .env con tus credenciales de SQL Server
+npm install
+npm run dev
+```
+
+### 4. Levantar el Frontend
+```bash
+cd frontend
+npm install
+npm start
+```

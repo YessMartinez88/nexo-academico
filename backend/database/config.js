@@ -1,9 +1,10 @@
-import sql from 'mssql';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const dbConfig: sql.config = {
+export const PORT = process.env.PORT || 3000;
+
+export const dbConfig = {
   server: process.env.DB_SERVER || 'localhost',
   port: parseInt(process.env.DB_PORT || '1433', 10),
   database: process.env.DB_NAME || 'sistema_asistencia',
@@ -19,12 +20,3 @@ const dbConfig: sql.config = {
     idleTimeoutMillis: 30000,
   },
 };
-
-let pool: sql.ConnectionPool | null = null;
-
-export async function getDbConnection(): Promise<sql.ConnectionPool> {
-  if (!pool) {
-    pool = await new sql.ConnectionPool(dbConfig).connect();
-  }
-  return pool;
-}
