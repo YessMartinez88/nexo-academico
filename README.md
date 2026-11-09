@@ -233,7 +233,7 @@ La configuración de conexión se realiza mediante variables de entorno definida
 ### Clonar el repositorio
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
+git clone <[URL_DEL_REPOSITORIO](https://github.com/YessMartinez88/nexo-academico.git)>
 cd Nexo-Academico
 ```
 
