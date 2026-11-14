@@ -38,5 +38,13 @@ export const queries = {
     password_hash
   FROM usuarios
   WHERE email = @email
-`
+`,
+
+ // estudiantes 
+ obtenerEstudiantes: `SELECT 
+                        id, nombre, apellido, email, rol, activo
+                      FROM 
+                        usuarios
+                      ORDER BY apellido, nombre
+                       `
 };

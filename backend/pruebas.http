@@ -1,0 +1,19 @@
+#GET http://localhost:3000/api/health
+
+
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "doc1@instituto.edu.ar",
+  "password": "Abc123!"
+}
+
+
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "doc1@instituto.edu.ar",
+  "password": "otra"
+}
