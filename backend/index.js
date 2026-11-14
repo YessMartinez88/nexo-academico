@@ -3,6 +3,8 @@ import cors from 'cors';
 import { PORT } from './database/config.js';
 import authRouter from './Routers/authRouter.js';
 
+import estudianteRouter from './Routers/estudianteRouter.js';
+
 const app = express();
 
 app.use(cors());
@@ -20,3 +22,7 @@ app.use('/api/auth', authRouter);
 app.listen(PORT, () => {
   console.log(`[Nexo-Academico] Servidor escuchando en http://localhost:${PORT}`);
 });
+
+
+
+app.use('/api/estudiantes', estudianteRouter);  

@@ -41,10 +41,14 @@ export const queries = {
 `,
 
  // estudiantes 
- obtenerEstudiantes: `SELECT 
-                        id, nombre, apellido, email, rol, activo
-                      FROM 
-                        usuarios
-                      ORDER BY apellido, nombre
+ obtenerEstudiantes: `   
+        SELECT 
+          id, nombre, apellido, email, rol, activo
+        FROM 
+          usuarios
+        WHERE 
+          rol = 'ALUMNO'
+        ORDER BY 
+          apellido, nombre
                        `
 };
