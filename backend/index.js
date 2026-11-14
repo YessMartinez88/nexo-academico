@@ -19,10 +19,11 @@ app.get('/api/health', (_req, res) => {
 
 //Rutas de autenticacion, sesion y roles
 app.use('/api/auth', authRouter);
+
+// estudiantes
+app.use('/api/estudiantes', estudianteRouter);
+
 app.listen(PORT, () => {
   console.log(`[Nexo-Academico] Servidor escuchando en http://localhost:${PORT}`);
 });
 
-
-
-app.use('/api/estudiantes', estudianteRouter);  
