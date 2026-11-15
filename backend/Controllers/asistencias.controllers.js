@@ -4,7 +4,6 @@ export async function obtenerAsistenciasPorAlumno(req, res) {
     try {
         const { id } = req.params; 
         
-        // Llamamos a la capa de servicios (ahora con datos simulados internamente)
         const resultado = await AsistenciasService.obtenerPorAlumno(id);
 
         return res.status(200).json({
