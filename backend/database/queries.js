@@ -68,6 +68,12 @@ export const queries = {
       i.comision_id = @comisionId 
       AND u.activo = 1
     ORDER BY u.apellido, u.nombre
+  `,
+
+  crearAsistencia: `
+    INSERT INTO asistencias (clase_id, alumno_id, estado)
+    OUTPUT INSERTED.id, INSERTED.clase_id, INSERTED.alumno_id, INSERTED.estado
+    VALUES (@claseId, @alumnoId, @estado)
   `
 
 };
