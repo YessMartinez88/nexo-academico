@@ -17,7 +17,7 @@ export async function buscarUsuarioPorEmail(email) {
 export async function buscarUsuarioPorId(id) {
   const pool = await getDbConnection();
   const result = await pool.request()
-    .input('id', sql.Int(50), id)
+    .input('id', sql.Int, id)
     .query(`
       SELECT id, nombre, apellido, email, rol, activo
       FROM usuarios
