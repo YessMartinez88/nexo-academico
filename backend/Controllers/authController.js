@@ -1,6 +1,6 @@
-import * as authService from '../Services/authService.js';
+const authService = require('../Services/authService');
 
-export async function postLogin(req, res) {
+async function postLogin(req, res) {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -14,7 +14,7 @@ export async function postLogin(req, res) {
   }
 }
 
-export async function getPerfil(req, res) {
+async function getPerfil(req, res) {
   try {
     const userId = req.headers['x-user-id'] || req.query.id;
     if (!userId) {
@@ -27,3 +27,15 @@ export async function getPerfil(req, res) {
     return res.status(404).json({ mensaje: error.message });
   }
 }
+
+module.exports = {
+  postLogin,
+  getPerfil,
+};
+
+
+
+
+
+
+
