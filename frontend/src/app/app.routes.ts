@@ -1,3 +1,10 @@
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  {
+    path: 'asistencia-docente',
+    loadComponent: () =>
+      import('./components/planilla-asistencia/planilla-asistencia.component')
+        .then(m => m.PlanillaAsistenciaComponent)
+  }
+];
