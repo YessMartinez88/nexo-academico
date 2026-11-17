@@ -13,7 +13,7 @@ El proyecto se desarrolla como Trabajo Práctico Integrador de las materias **De
 - **Frontend:** Angular 22, TypeScript, HTML5 y CSS3.
 - **Navegación:** Angular Router.
 - **Consumo de APIs:** `HttpClient` de Angular.
-- **Backend:** Node.js y Express con módulos ES.
+- **Backend:** Node.js y Express con CommonJS.
 - **Base de datos:** Microsoft SQL Server.
 - **Acceso a datos:** paquete `mssql`, conexión y consultas separadas.
 - **Control de versiones:** Git y GitHub.
