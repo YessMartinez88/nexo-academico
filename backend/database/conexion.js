@@ -1,5 +1,5 @@
 const sql = require('mssql');
-const { dbConfig } = require('./config');
+const { dbConfig } = require('./config.js');
 
 let pool = null;
 
@@ -10,12 +10,10 @@ async function getDbConnection() {
     }
     return pool;
   } catch (error) {
+    pool = null
     console.error('[Nexo-Academico] Error al conectar con SQL Server:', error);
-    throw error;
-  }
+    return null;
+    }
 }
 
-module.exports = {
-  getDbConnection,
-  sql
-};
+module.exports = { getDbConnection, sql };

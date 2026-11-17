@@ -10,24 +10,10 @@ const queries = {
    * -------- QUERYS ASISTENCIAS ----------------
    */
   obtenerAsistenciasPorAlumno: `
-    SELECT 
-        a.id,
-        a.clase_id,
-        a.alumno_id,
-        a.estado,
-        c.fecha,
-        c.comision_id,
-        com.materia
-    FROM registros_asistencia a
+    SELECT a.*, c.fecha, c.comision_id
+    FROM asistencias a
     INNER JOIN clases c ON a.clase_id = c.id
-    INNER JOIN comisiones com ON c.comision_id = com.id
     WHERE a.alumno_id = @alumnoId
-  `,
-
-  crearAsistencia: `
-    INSERT INTO registros_asistencia (clase_id, alumno_id, estado)
-    OUTPUT INSERTED.id, INSERTED.clase_id, INSERTED.alumno_id, INSERTED.estado
-    VALUES (@claseId, @alumnoId, @estado)
   `,
 
   // Justificaciones
@@ -43,24 +29,22 @@ const queries = {
     WHERE id = @id
   `,
 
-  /**
-   * -------- QUERYS AUTH / USUARIOS ----------------
-   */
   obtenerUsuarioPorEmail: `
-    SELECT
-      id,
-      nombre,
-      apellido,
-      email,
-      rol,
-      activo,
-      password_hash
-    FROM usuarios
-    WHERE email = @email
-  `,
+  SELECT
+    id,
+    nombre,
+    apellido,
+    email,
+    rol,
+    activo,
+    password_hash
+  FROM usuarios
+  WHERE email = @email
+`,
+
 
   /**
-   * -------- QUERYS ESTUDIANTES ----------------
+   *   --------   QUERYS ESTUDIANTES  ----------------
    */
   obtenerEstudiantes: `   
     SELECT id, nombre, apellido, email, rol, activo
@@ -70,7 +54,8 @@ const queries = {
     ORDER BY apellido, nombre
   `,
 
-  obtenerEstudiantePorId: `
+  obtenerEstudiantePorId:
+    `
     SELECT id, nombre, apellido, email, rol, activo
     FROM usuarios
     WHERE 
@@ -85,9 +70,14 @@ const queries = {
       i.comision_id = @comisionId 
       AND u.activo = 1
     ORDER BY u.apellido, u.nombre
+  `,
+
+  crearAsistencia: `
+    INSERT INTO asistencias (clase_id, alumno_id, estado)
+    OUTPUT INSERTED.id, INSERTED.clase_id, INSERTED.alumno_id, INSERTED.estado
+    VALUES (@claseId, @alumnoId, @estado)
   `
+
 };
 
-module.exports = {
-  queries
-};
+module.exports = { queries };

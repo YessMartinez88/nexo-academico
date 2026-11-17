@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const asistenciaRepo = require('../Repositories/asistenciaRepository');
 
 async function obtenerPorAlumno(id) {
@@ -30,3 +31,24 @@ async function obtenerPorAlumno(id) {
 module.exports = {
     obtenerPorAlumno
 };
+=======
+const asistenciaRepo = require('../Repositories/asistenciaRepository.js');
+
+async function registrarAsistencia(claseId, alumnoId, estado) {
+    const asistencia = await asistenciaRepo.crearAsistencia(claseId, alumnoId, estado);
+    return asistencia;
+}
+
+async function registrarPlanilla(claseId, asistencias) {
+    const guardadas = [];
+
+    for (const item of asistencias) {                       
+        const nueva = await registrarAsistencia(claseId, item.alumnoId, item.estado);   
+        guardadas.push(nueva);
+    }
+
+    return guardadas;                                      
+}
+
+module.exports = { registrarAsistencia, registrarPlanilla };
+>>>>>>> 1a9068429304fe5b057b6a1d7d9de54d6bbf2400
