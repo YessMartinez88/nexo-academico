@@ -1,6 +1,14 @@
 const { getDbConnection, sql } = require('../database/conexion.js');
 const { queries } = require('../database/queries.js');
 
+async function obtenerPorAlumno(alumnoId) {
+    const pool = await getDbConnection();
+    const result = await pool.request()
+                            .input('alumnoId', sql.Int, alumnoId)
+                            .query(queries.obtenerAsistenciasPorAlumno);
+    return result.recordset; 
+}
+
 async function crearAsistencia(claseId, alumnoId, estado) {
     const pool = await getDbConnection();
     const result = await pool.request()
@@ -11,4 +19,4 @@ async function crearAsistencia(claseId, alumnoId, estado) {
     return result.recordset[0];
 }
 
-module.exports = { crearAsistencia };
+module.exports = { crearAsistencia, obtenerPorAlumno };
