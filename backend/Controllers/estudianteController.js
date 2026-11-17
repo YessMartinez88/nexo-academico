@@ -1,6 +1,6 @@
-import * as estudianteService from '../Services/estudianteService.js';
+const estudianteService = require('../Services/estudianteService.js');
 
-export async function getEstudiantes(req, res) {
+async function getEstudiantes(req, res) {
     try {
         const { comisionId } = req.query;
         const estudiantes = await estudianteService.listarEstudiantes(comisionId);
@@ -11,7 +11,7 @@ export async function getEstudiantes(req, res) {
     }
 }
 
-export async function getEstudiantePorId(req, res) {
+async function getEstudiantePorId(req, res) {
     try {
         const { id } = req.params;
         const estudiante = await estudianteService.buscarEstudiante(id);
@@ -25,3 +25,5 @@ export async function getEstudiantePorId(req, res) {
         return res.status(500).json({ mensaje: 'Error al obtener el estudiante' });
     }
 }
+
+module.exports = { getEstudiantes, getEstudiantePorId };

@@ -1,8 +1,11 @@
-import { Router } from 'express';
-import { postAsistencia } from '../Controllers/asistenciaController.js';
+const { Router } = require('express');
+const { postAsistencia, postPlanilla } = require('../Controllers/asistenciaController.js');
 
 const router = Router();
 
 router.post('/', postAsistencia); 
+router.post('/planilla', postPlanilla);
 
-export default router;
+
+
+module.exports = router;
