@@ -1,1 +1,66 @@
-<button class="btn btn-primary">Probando Bootstrap</button>
+<div class="container py-4">
+    <h2 class="mb-4">Planilla de asistencia</h2>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-6">
+            <label for="comision" class="form-label">Comisión</label>
+            <select id="comision" class="form-select" #comisionSelect (change)="elegirComision(comisionSelect.value)">
+                <option value="">Elegí una comisión</option>
+                @for (comision of comisiones; track comision.id) {
+                <option [value]="comision.id">{{ comision.materia }}</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="clase" class="form-label">Clase</label>
+            <select id="clase" class="form-select" #claseSelect [disabled]="clases().length === 0">
+                @for (clase of clases(); track clase.id) {
+                <option [value]="clase.id">{{ clase.fecha }}</option>
+                } @empty {
+                <option value="">Sin clases abiertas</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    @if (filas().length === 0) {
+    <div class="alert alert-info">Elegí una comisión para ver sus alumnos.</div>
+    } @else {
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th scope="col">Apellido</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (fila of filas(); track fila.estudiante.id) {
+            <tr>
+                <td>{{ fila.estudiante.apellido }}</td>
+                <td>{{ fila.estudiante.nombre }}</td>
+                <td>
+                    @for (estado of estados; track estado) {
+                    <button type="button" class="btn btn-sm me-1" [class.btn-primary]="fila.estado === estado"
+                        [class.btn-outline-secondary]="fila.estado !== estado"
+                        (click)="cambiarEstado(fila.estudiante.id, estado)">
+                        {{ estado }}
+                    </button>
+                    }
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-success" [disabled]="clases().length === 0 || guardado()"
+        (click)="guardarPlanilla(claseSelect.value)">
+        Guardar planilla
+    </button>
+    }
+
+    @if (mensaje()) {
+    <div class="alert alert-warning mt-3">{{ mensaje() }}</div>
+    }
+</div>
