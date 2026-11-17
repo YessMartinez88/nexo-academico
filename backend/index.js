@@ -13,7 +13,7 @@ app.use(express.json());
 
 //Endpoint de salud para verificar que el backend está corriendo
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', proyecto: 'Nexo-Academico' });
+    res.json({ status: 'ok', proyecto: 'Nexo-Academico' });
 });
 
 

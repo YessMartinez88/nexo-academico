@@ -6,7 +6,9 @@ const queries = {
     VALUES (@materia, @docenteId, @cicloLectivo, @estado)
   `,
 
-  // Asistencias
+  /**
+   * -------- QUERYS ASISTENCIAS ----------------
+   */
   obtenerAsistenciasPorAlumno: `
     SELECT a.*, c.fecha, c.comision_id
     FROM asistencias a
