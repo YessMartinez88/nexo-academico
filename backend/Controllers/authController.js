@@ -1,29 +1,48 @@
-import * as authService from '../Services/authService.js';
+const authService = require('../Services/authService');
 
-export async function postLogin(req, res) {
+async function login(req, res) {
   try {
     const { email, password } = req.body;
+
     if (!email || !password) {
-      return res.status(400).json({ mensaje: 'Email y contraseña requeridos' });
+      return res.status(400).json({ mensaje: 'Debe ingresar email y contraseña' });
     }
 
-    const data = await authService.login(email, password);
-    return res.json(data);
+    const resultado = await authService.login(email, password);
+
+    if (!resultado.ok) {
+      return res.status(resultado.status).json({ mensaje: resultado.mensaje });
+    }
+
+    return res.status(resultado.status).json(resultado.data);
   } catch (error) {
-    return res.status(401).json({ mensaje: error.message });
+    console.error('Error en login:', error);
+    return res.status(500).json({ mensaje: 'Error interno al iniciar sesión' });
   }
 }
 
-export async function getPerfil(req, res) {
+async function perfil(req, res) {
   try {
-    const userId = req.headers['x-user-id'] || req.query.id;
+    const userId = req.headers['x-user-id'];
+
     if (!userId) {
-      return res.status(400).json({ mensaje: 'Falta identificador de usuario' });
+      return res.status(401).json({ mensaje: 'No autenticado' });
     }
 
-    const perfil = await authService.getPerfil(userId);
-    return res.json(perfil);
+    const resultado = await authService.getPerfil(userId);
+
+    if (!resultado.ok) {
+      return res.status(resultado.status).json({ mensaje: resultado.mensaje });
+    }
+
+    return res.status(resultado.status).json(resultado.data);
   } catch (error) {
-    return res.status(404).json({ mensaje: error.message });
+    console.error('Error en perfil:', error);
+    return res.status(500).json({ mensaje: 'Error interno al obtener perfil' });
   }
 }
+
+module.exports = {
+  login,
+  perfil
+};
