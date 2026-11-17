@@ -16,7 +16,8 @@ async function postLogin(req, res) {
 
     return res.status(resultado.status).json(resultado.data);
   } catch (error) {
-    console.error('Error en login:', error);
+    //console.error('Error en login:', error);
+    console.error('[authController] Error en login:', error);
     return res.status(500).json({ mensaje: 'Error interno al iniciar sesión' });
   }
 }
@@ -37,7 +38,8 @@ async function getPerfil(req, res) {
 
     return res.status(resultado.status).json(resultado.data);
   } catch (error) {
-    console.error('Error en perfil:', error);
+    //console.error('Error en perfil:', error);
+    console.error('[authController] Error en perfil:', error);
     return res.status(500).json({ mensaje: 'Error interno al obtener perfil' });
   }
 }
