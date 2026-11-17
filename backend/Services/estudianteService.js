@@ -1,6 +1,6 @@
-import * as estudianteRepo from '../Repositories/estudianteRepository.js';
+const estudianteRepo = require('../Repositories/estudianteRepository.js');
 
-export async function listarEstudiantes(comisionId) {
+async function listarEstudiantes(comisionId) {
     if (comisionId == undefined) {
         const estudiantes = await estudianteRepo.obtenerEstudiantes();
         return estudiantes;
@@ -11,8 +11,10 @@ export async function listarEstudiantes(comisionId) {
     return estudiantesComision;
 }
 
-export async function buscarEstudiante(id) {
+async function buscarEstudiante(id) {
     parseInt(id);
     const estudiante = await estudianteRepo.obtenerEstudiantePorId(id);
     return estudiante;
 }
+
+module.exports = { listarEstudiantes, buscarEstudiante };

@@ -1,5 +1,6 @@
-const { getDbConnection, sql } = require('../database/conexion');
+const { getDbConnection, sql } = require('../database/conexion.js');
 
+// Busca al usuario por su email para verificar credenciales en el login
 async function buscarUsuarioPorEmail(email) {
   const pool = await getDbConnection();
   const result = await pool
@@ -21,6 +22,7 @@ async function buscarUsuarioPorEmail(email) {
   return result.recordset[0] || null;
 }
 
+// Busca al usuario por ID para devolver los datos del perfil
 async function buscarUsuarioPorId(id) {
   const pool = await getDbConnection();
   const result = await pool
@@ -41,7 +43,4 @@ async function buscarUsuarioPorId(id) {
   return result.recordset[0] || null;
 }
 
-module.exports = {
-  buscarUsuarioPorEmail,
-  buscarUsuarioPorId
-};
+module.exports = { buscarUsuarioPorEmail, buscarUsuarioPorId };

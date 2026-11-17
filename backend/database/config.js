@@ -1,4 +1,4 @@
-const dotenv = require('dotenv');
+const dotenv = require('dotenv'); 
 
 dotenv.config();
 
@@ -21,7 +21,5 @@ const dbConfig = {
   },
 };
 
-module.exports = {
-  PORT,
-  dbConfig
-};
+
+module.exports = { PORT, dbConfig };

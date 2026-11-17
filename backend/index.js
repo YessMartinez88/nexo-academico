@@ -1,10 +1,9 @@
-import express from 'express';
-import cors from 'cors';
-import { PORT } from './database/config.js';
-import authRouter from './Routers/authRouter.js';
-
-import estudianteRouter from './Routers/estudianteRouter.js';
-import asistenciaRouter from './Routers/asistenciaRouter.js';
+const express = require('express');
+const cors = require('cors');
+const { PORT } = require('./database/config.js');
+const authRouter = require('./Routers/authRouter.js');
+const estudianteRouter = require('./Routers/estudianteRouter.js');
+const asistenciaRouter = require('./Routers/asistenciaRouter.js');
 
 const app = express();
 

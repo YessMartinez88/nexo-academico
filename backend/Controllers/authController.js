@@ -1,6 +1,6 @@
-const authService = require('../Services/authService');
+const authService = require('../Services/authService.js');
 
-async function login(req, res) {
+async function postLogin(req, res) {
   try {
     const { email, password } = req.body;
 
@@ -21,7 +21,7 @@ async function login(req, res) {
   }
 }
 
-async function perfil(req, res) {
+async function getPerfil(req, res) {
   try {
     const userId = req.headers['x-user-id'];
 
@@ -42,7 +42,4 @@ async function perfil(req, res) {
   }
 }
 
-module.exports = {
-  login,
-  perfil
-};
+module.exports = { postLogin, getPerfil };

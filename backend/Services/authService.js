@@ -1,4 +1,4 @@
-const authRepo = require('../Repositories/authRepository');
+const authRepo = require('../Repositories/authRepository.js');
 
 async function login(email, password) {
   const user = await authRepo.buscarUsuarioPorEmail(email);
@@ -37,14 +37,7 @@ async function getPerfil(userId) {
   if (!user) {
     return { ok: false, status: 404, mensaje: 'Usuario no encontrado' };
   }
-  return {
-    ok: true,
-    status: 200,
-    data: user
-  };
+  return user;
 }
 
-module.exports = {
-  login,
-  getPerfil
-};
+module.exports = { login, getPerfil };

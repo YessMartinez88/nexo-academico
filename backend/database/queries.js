@@ -1,4 +1,4 @@
-export const queries = {
+const queries = {
   // Comisiones
   obtenerComisiones: 'SELECT * FROM comisiones ORDER BY creado_en DESC',
   crearComision: `
@@ -78,5 +78,4 @@ export const queries = {
 
 };
 
-
-
+module.exports = { queries };
