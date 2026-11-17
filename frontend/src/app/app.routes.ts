@@ -9,5 +9,17 @@ export const routes: Routes = [
                 (m) => m.PlanillaAsistenciaComponent,
             ),
     },
+    {
+        path: "justificaciones",
+        loadComponent: () =>
+            import("./components/justificaciones/justificaciones.component").then((m) => m.JustificacionesComponent),
+    },
+    {
+        path: "revision-justificaciones",
+        loadComponent: () =>
+            import("./components/revision-justificaciones/revision-justificaciones.component").then(
+                (m) => m.RevisionJustificacionesComponent,
+            ),
+    },
     { path: "**", redirectTo: "comisiones" },
 ];

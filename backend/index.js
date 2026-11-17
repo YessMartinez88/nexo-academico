@@ -5,6 +5,7 @@ const authRouter = require("./Routers/authRouter.js");
 const estudianteRouter = require("./Routers/estudianteRouter.js");
 const asistenciaRouter = require("./Routers/asistenciaRouter.js");
 const { comisionesRouter } = require("./Routers/comisionesRouter.js");
+const justificacionRouter = require("./Routers/justificacionRouter.js");
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use("/api/estudiantes", estudianteRouter);
 
 app.use("/api/asistencias", asistenciaRouter);
 app.use("/api/comisiones", comisionesRouter);
+app.use("/api/justificaciones", justificacionRouter);
 
 app.listen(PORT, () => {
     console.log(`[Nexo-Academico] Servidor escuchando en http://localhost:${PORT}`);

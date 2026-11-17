@@ -52,3 +52,33 @@ Content-Type: application/json
 ### 4. Obtener perfil activo (reemplazá el 1 por el id devuelto en el paso 2)
 GET http://localhost:3000/api/auth/perfil
 x-user-id: 1
+
+
+### Justificaciones
+
+### Ausencias / tardanzas / retiros que el alumno 6 puede justificar
+GET http://localhost:3000/api/justificaciones/justificables/6
+
+### Listar todas las pendientes (pantalla de revisión)
+GET http://localhost:3000/api/justificaciones?estado=PENDIENTE
+
+### Solicitudes de un alumno
+GET http://localhost:3000/api/justificaciones?alumnoId=6
+
+### Crear solicitud (asistencia 8 = alumno 8, ausente el 10/11)
+POST http://localhost:3000/api/justificaciones
+Content-Type: application/json
+
+{ "asistenciaId": 8, "alumnoId": 8, "motivo": "Turno en el hospital", "archivoUrl": "https://drive.example.com/turno.pdf" }
+
+### Aprobar (la asistencia pasa de A a AJ)
+PATCH http://localhost:3000/api/justificaciones/1/revisar
+Content-Type: application/json
+
+{ "estado": "APROBADA", "observacion": "Certificado válido" }
+
+### Rechazar (la observación es obligatoria)
+PATCH http://localhost:3000/api/justificaciones/2/revisar
+Content-Type: application/json
+
+{ "estado": "RECHAZADA", "observacion": "Falta el comprobante" }

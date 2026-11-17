@@ -18,3 +18,46 @@ export interface Comision {
     cicloLectivo: string;
     estado: EstadoComision;
 }
+
+export interface AsistenciaJustificable {
+    asistenciaId: number;
+    estado: "A" | "T" | "R";
+    claseId: number;
+    fecha: string;
+    comisionId: number;
+    materia: string;
+}
+
+export interface Justificacion {
+    id: number;
+    asistenciaId: number;
+    alumnoId: number;
+    alumno: string;
+    motivo: string;
+    archivoUrl: string | null;
+    estado: EstadoJustificacion;
+    observacionAdmin: string | null;
+    fechaSolicitud: string;
+    fechaRevision: string | null;
+    estadoAsistencia: EstadoAsistencia;
+    fechaClase: string;
+    materia: string;
+}
+
+export interface NuevaJustificacion {
+    asistenciaId: number;
+    alumnoId: number;
+    motivo: string;
+    archivoUrl?: string | null;
+}
+
+export interface RevisionJustificacion {
+    estado: "APROBADA" | "RECHAZADA";
+    observacion?: string | null;
+}
+
+export interface Feriado {
+    fecha: string;
+    tipo: string;
+    nombre: string;
+}
