@@ -1,7 +1,7 @@
-import { getDbConnection, sql } from '../database/conexion.js';
-import { queries } from '../database/queries.js';
+const { getDbConnection, sql } = require('../database/conexion.js');
+const { queries } = require('../database/queries.js');
 
-export async function crearAsistencia(claseId, alumnoId, estado) {
+async function crearAsistencia(claseId, alumnoId, estado) {
     const pool = await getDbConnection();
     const result = await pool.request()
                             .input('claseId', sql.Int, claseId)
@@ -10,3 +10,5 @@ export async function crearAsistencia(claseId, alumnoId, estado) {
                             .query(queries.crearAsistencia);
     return result.recordset[0];
 }
+
+module.exports = { crearAsistencia };

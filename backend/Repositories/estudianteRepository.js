@@ -1,14 +1,13 @@
-import { getDbConnection, sql } from '../database/conexion.js';
-import { queries } from '../database/queries.js';
+const { getDbConnection, sql } = require('../database/conexion.js');
+const { queries } = require('../database/queries.js');
 
-
-export async function obtenerEstudiantes() {
+async function obtenerEstudiantes() {
     const pool = await getDbConnection();
     const result = await pool.request().query(queries.obtenerEstudiantes);
     return result.recordset;
 }
 
-export async function obtenerEstudiantePorId(id) {
+async function obtenerEstudiantePorId(id) {
     const pool = await getDbConnection();
     const result = await pool.request()
         .input('id', sql.Int, id)
@@ -16,11 +15,12 @@ export async function obtenerEstudiantePorId(id) {
     return result.recordset[0] || null;
 }
 
-
-export async function obtenerEstudiantesPorComision(comisionId) {
+async function obtenerEstudiantesPorComision(comisionId) {
     const pool = await getDbConnection();
     const result = await pool.request()
         .input('comisionId', sql.Int, comisionId)
         .query(queries.obtenerEstudiantesPorComision);
     return result.recordset;
 }
+
+module.exports = { obtenerEstudiantes, obtenerEstudiantePorId, obtenerEstudiantesPorComision };

@@ -2,7 +2,7 @@
   "name": "nexo-academico-server",
   "version": "1.0.0",
   "description": "Backend API para Nexo-Academico (IFTS N° 11)",
-  "type": "module",
+  "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

@@ -1,6 +1,6 @@
-import * as authRepo from '../Repositories/authRepository.js';
+const authRepo = require('../Repositories/authRepository.js');
 
-export async function login(email, password) {
+async function login(email, password) {
   const user = await authRepo.buscarUsuarioPorEmail(email);
 
   if (!user) {
@@ -28,10 +28,12 @@ export async function login(email, password) {
   };
 }
 
-export async function getPerfil(userId) {
+async function getPerfil(userId) {
   const user = await authRepo.buscarUsuarioPorId(userId);
   if (!user) {
     throw new Error('Usuario no encontrado');
   }
   return user;
 }
+
+module.exports = { login, getPerfil };

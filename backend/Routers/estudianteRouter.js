@@ -1,9 +1,9 @@
-import { Router } from 'express';
-import { getEstudiantePorId, getEstudiantes } from '../Controllers/estudianteController.js';
+const { Router } = require('express');
+const { getEstudiantes, getEstudiantePorId } = require('../Controllers/estudianteController.js');
 
 const router = Router();
 
 router.get('/', getEstudiantes);  
 router.get('/:id', getEstudiantePorId);  
 
-export default router;
+module.exports = router;
