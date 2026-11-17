@@ -3,13 +3,23 @@
     <h1>Nexo Académico</h1>
     <span>IFTS N° 11</span>
   </div>
+
+  @if (authService.estaAutenticadoService()) {
   <nav class="nav-links">
+    @if (authService.obtenerRolService() === 'ADMIN') {
     <a routerLink="/comisiones">Comisiones (Admin)</a>
+    <a routerLink="/revision-justificaciones">Revisión (Admin)</a>
+    }
+    @if (authService.obtenerRolService() === 'DOCENTE') {
     <a routerLink="/asistencia-docente">Planilla (Docente)</a>
+    }
+    @if (authService.obtenerRolService() === 'ALUMNO') {
     <a routerLink="/mis-asistencias">Mis Asistencias (Alumno)</a>
     <a routerLink="/justificaciones">Solicitar Justificación</a>
-    <a routerLink="/revision-justificaciones">Revisión (Admin)</a>
+    }
+    <a (click)="authService.logoutService()">Cerrar Sesión</a>
   </nav>
+}
 </header>
 
 <main class="container">
