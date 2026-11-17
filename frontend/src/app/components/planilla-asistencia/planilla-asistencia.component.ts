@@ -3,6 +3,7 @@ import { AsistenciaService } from '../../services/asistencia.service';
 import { Estudiante } from '../../models/estudiante';
 import { ComisionPlanilla } from '../../models/comision-planilla';
 import { ClasePlanilla } from '../../models/clase-planilla';
+import { Planilla } from '../../models/planilla';
 
 interface FilaPlanilla {
   estudiante: Estudiante,
@@ -35,13 +36,13 @@ export class PlanillaAsistenciaComponent {
   readonly clases = signal<ClasePlanilla[]>([])
   readonly filas = signal<FilaPlanilla[]>([])
   readonly mensaje = signal('')
-  readonly guardado = signal(false)
+  readonly guardando = signal(false)
 
   elegirComision(valor: string): void {
     this.filas.set([])
     this.clases.set([])
     this.mensaje.set('')
-    this.guardado.set(false)
+    this.guardando.set(false)
 
     if (valor === '') {
       return
@@ -74,26 +75,23 @@ export class PlanillaAsistenciaComponent {
       return
     }
 
-    const claseId = Number(valorClase)
-    let guardados = 0
+    const planilla: Planilla = {
+      claseId: Number(valorClase),
+      asistencias: this.filas().map(f => ({ alumnoId: f.estudiante.id, estado: f.estado }))
+    }
 
-    this.guardado.set(true)
+    this.guardando.set(true)
 
-    this.filas().forEach(fila => {
-      this._asistenciaService.registrarAsistenciaService({
-        claseId: claseId,
-        alumnoId: fila.estudiante.id,
-        estado: fila.estado
-      }).subscribe({
-        next: () => {
-          guardados++
-          this.mensaje.set(`Guardados ${guardados} de ${this.filas().length}`)
-        },
-        error: error => {
-          console.log(error)
-          this.mensaje.set(`Error al guardar a ${fila.estudiante.apellido}`)
-        }
-      })
+    this._asistenciaService.guardarPlanillaService(planilla).subscribe({
+      next: guardadas => {
+        this.guardando.set(false)
+        this.mensaje.set(`Planilla guardada: ${guardadas.length} alumnos`)
+      },
+      error: error => {
+        console.log(error)
+        this.guardando.set(false)
+        this.mensaje.set('No se pudo guardar la planilla')
+      }
     })
   }
 }

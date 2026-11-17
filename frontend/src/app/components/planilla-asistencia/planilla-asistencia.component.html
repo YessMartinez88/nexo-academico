@@ -54,9 +54,13 @@
         </tbody>
     </table>
 
-    <button type="button" class="btn btn-success" [disabled]="clases().length === 0 || guardado()"
+    <button type="button" class="btn btn-success" [disabled]="clases().length === 0 || guardando()"
         (click)="guardarPlanilla(claseSelect.value)">
+        @if (guardando()) {
+        Guardando...
+        } @else {
         Guardar planilla
+        }
     </button>
     }
 

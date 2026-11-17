@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Estudiante } from '../models/estudiante';
-import { Asistencia } from '../models/asistencia';
+import { Planilla, AsistenciaGuardada } from '../models/planilla';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class AsistenciaService {
     return this._httpClient.get<Estudiante[]>(`${this._url}/estudiantes?comisionId=${comisionId}`)
   }
 
-  public registrarAsistenciaService(asistencia: Asistencia): Observable<Asistencia> {
-    return this._httpClient.post<Asistencia>(`${this._url}/asistencias`, asistencia)
+  public guardarPlanillaService(planilla: Planilla): Observable<AsistenciaGuardada[]> {
+    return this._httpClient.post<AsistenciaGuardada[]>(`${this._url}/asistencias/planilla`, planilla)
   }
 }
