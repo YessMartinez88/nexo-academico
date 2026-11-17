@@ -9,6 +9,13 @@ export interface Usuario {
   apellido: string;
   email: string;
   rol: RolUsuario;
+  activo: boolean;
+  token: string;
+}
+
+export interface UsuarioLogin {
+    email: string;
+    password: string;
 }
 
 export interface Comision {
@@ -18,3 +25,4 @@ export interface Comision {
   cicloLectivo: string;
   estado: EstadoComision;
 }
+
