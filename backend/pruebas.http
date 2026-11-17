@@ -25,3 +25,30 @@ POST http://localhost:3000/api/asistencias
 Content-Type: application/json
 
 { "claseId": 3, "alumnoId": 5, "estado": "P" }
+
+
+
+### 1. Salud del servidor
+GET http://localhost:3000/api/health
+
+### 2. Login exitoso (Docente)
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "doc1@instituto.edu.ar",
+  "password": "Abc123!"
+}
+
+### 3. Login fallido (Credenciales inválidas -> 401)
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "doc1@instituto.edu.ar",
+  "password": "otra"
+}
+
+### 4. Obtener perfil activo (reemplazá el 1 por el id devuelto en el paso 2)
+GET http://localhost:3000/api/auth/perfil
+x-user-id: 1
