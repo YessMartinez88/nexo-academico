@@ -2,11 +2,12 @@
   "name": "nexo-academico-server",
   "version": "1.0.0",
   "description": "Backend API para Nexo-Academico (IFTS N° 11)",
+  "type": "commonjs",
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+   "dev": "nodemon index.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

@@ -10,10 +10,10 @@ El proyecto se desarrolla como Trabajo Práctico Integrador de las materias **De
 
 ## Tecnologías
 
-- **Frontend:** Angular, TypeScript, HTML5 y CSS3.
+- **Frontend:** Angular 22, TypeScript, HTML5 y CSS3.
 - **Navegación:** Angular Router.
 - **Consumo de APIs:** `HttpClient` de Angular.
-- **Backend:** Node.js y Express con módulos ES.
+- **Backend:** Node.js y Express con CommonJS.
 - **Base de datos:** Microsoft SQL Server.
 - **Acceso a datos:** paquete `mssql`, conexión y consultas separadas.
 - **Control de versiones:** Git y GitHub.
@@ -223,9 +223,9 @@ La configuración de conexión se realiza mediante variables de entorno definida
 
 ### Requisitos previos
 
-- Node.js compatible con la versión de Angular utilizada.
+- Node.js `22.22.3` o superior dentro de la 22, o `24.15` o superior (requisito de Angular 22).
 - npm.
-- Angular CLI compatible con el proyecto.
+- Angular CLI 22 (se usa la del proyecto con `npx ng`).
 - Microsoft SQL Server.
 - SQL Server Management Studio u otra herramienta equivalente.
 - Git.
