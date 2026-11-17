@@ -1,4 +1,4 @@
-const estudianteService = require('../Services/estudianteService.js');
+const estudianteService = require("../Services/estudianteService.js");
 
 async function getEstudiantes(req, res) {
     try {
@@ -6,8 +6,8 @@ async function getEstudiantes(req, res) {
         const estudiantes = await estudianteService.listarEstudiantes(comisionId);
         return res.status(200).json(estudiantes);
     } catch (error) {
-        console.error('[estudianteController] getEstudiantes:', error);
-        return res.status(500).json({ mensaje: 'Error al obtener los estudiantes' });
+        console.error("[estudianteController] getEstudiantes:", error);
+        return res.status(500).json({ mensaje: "Error al obtener los estudiantes" });
     }
 }
 
@@ -21,8 +21,8 @@ async function getEstudiantePorId(req, res) {
         }
         return res.status(200).json(estudiante);
     } catch (error) {
-        console.error('[estudianteController] getEstudiantePorId:', error);
-        return res.status(500).json({ mensaje: 'Error al obtener el estudiante' });
+        console.error("[estudianteController] getEstudiantePorId:", error);
+        return res.status(500).json({ mensaje: "Error al obtener el estudiante" });
     }
 }
 

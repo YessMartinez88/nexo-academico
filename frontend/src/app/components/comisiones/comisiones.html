@@ -1,0 +1,91 @@
+<div class="comisiones-container">
+    <h2 class="mb-4">Gestión básica de comisiones</h2>
+    @if (mensaje()) {
+    <div class="alert alert-info">{{ mensaje() }}</div>
+    }
+    <section class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h3 class="h5">Crear comisión</h3>
+            <form [formGroup]="formulario" (ngSubmit)="guardarComision()">
+                <div class="mb-3">
+                    <label class="form-label" for="materia">Materia</label
+                    ><input id="materia" class="form-control" formControlName="materia" />@if
+                    (formulario.controls.materia.touched && formulario.controls.materia.invalid) {
+                    <div class="text-danger">Ingrese la materia.</div>
+                    }
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="docente_id">ID del docente</label
+                    ><input id="docente_id" type="number" class="form-control" formControlName="docente_id" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="ciclo_lectivo">Ciclo lectivo</label
+                    ><input
+                        id="ciclo_lectivo"
+                        class="form-control"
+                        formControlName="ciclo_lectivo"
+                        placeholder="2026"
+                    />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="estado">Estado</label
+                    ><select id="estado" class="form-select" formControlName="estado">
+                        <option value="BORRADOR">BORRADOR</option>
+                        <option value="ACTIVA">ACTIVA</option>
+                        <option value="CERRADA">CERRADA</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" type="submit">Crear comisión</button
+                ><button class="btn btn-secondary ms-2" type="button" (click)="limpiarFormulario()">Limpiar</button>
+            </form>
+        </div>
+    </section>
+    <section class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="h5">Comisiones disponibles</h3>
+            <div class="row g-3 mb-3">
+                <div class="col-md-8">
+                    <label class="form-label" for="filtro">Filtrar</label
+                    ><input id="filtro" class="form-control" [formControl]="filtro" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" for="estadoFiltro">Estado</label
+                    ><select id="estadoFiltro" class="form-select" [formControl]="estadoFiltro">
+                        <option value="TODOS">Todos</option>
+                        <option value="BORRADOR">BORRADOR</option>
+                        <option value="ACTIVA">ACTIVA</option>
+                        <option value="CERRADA">CERRADA</option>
+                    </select>
+                </div>
+            </div>
+            @if (comisionesFiltradas.length === 0) {
+            <div class="alert alert-warning">No hay comisiones para mostrar.</div>
+            } @else {
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Materia</th>
+                            <th>Docente</th>
+                            <th>Ciclo</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (comision of comisionesFiltradas; track comision.id) {
+                        <tr>
+                            <td>{{ comision.id }}</td>
+                            <td>{{ comision.materia }}</td>
+                            <td>{{ comision.docenteId }}</td>
+                            <td>{{ comision.cicloLectivo }}</td>
+                            <td>{{ comision.estado }}</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            }
+        </div>
+    </section>
+</div>
