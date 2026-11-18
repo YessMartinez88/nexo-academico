@@ -4,8 +4,6 @@ Sistema web para la gestión y el seguimiento de la asistencia estudiantil en in
 
 El proyecto se desarrolla como Trabajo Práctico Integrador de las materias **Desarrollo de Sistemas Web — Frontend y Backend** de la **Tecnicatura Superior en Desarrollo de Software — IFTS N.º 11**.
 
-> **Estado del proyecto:** el repositorio contiene actualmente la estructura inicial del frontend Angular, el backend Node.js/Express, la configuración de conexión a SQL Server y los scripts de creación y carga de datos. Los módulos funcionales y sus endpoints se encuentran planificados según la matriz de responsabilidades y se implementarán progresivamente.
-
 ---
 
 ## Tecnologías
@@ -18,52 +16,11 @@ El proyecto se desarrolla como Trabajo Práctico Integrador de las materias **De
 - **Acceso a datos:** paquete `mssql`, conexión y consultas separadas.
 - **Control de versiones:** Git y GitHub.
 
-La versión de Angular debe mantenerse en **Angular 19 o superior**, de acuerdo con la consigna de Frontend. La versión efectiva instalada se puede consultar con:
+La versión de Angular verificar la version:
 
 ```bash
 npx ng version
 ```
-
----
-
-## Estructura actual del repositorio
-
-```text
-Nexo-Academico/
-├── backend/
-│   ├── Controllers/       # Controladores backend
-│   ├── Repositories/      # Acceso a datos
-│   ├── Routers/           # Rutas de la API
-│   ├── Services/          # Lógica de negocio
-│   ├── database/
-│   │   ├── config.js      # Configuración de entorno y SQL Server
-│   │   ├── conexion.js    # Pool de conexión a la base de datos
-│   │   └── queries.js     # Consultas SQL
-│   ├── .env.example
-│   ├── index.js           # Punto de entrada del servidor
-│   └── package.json
-├── frontend/
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── components/ # Componentes Angular
-│   │   │   ├── models/     # Modelos e interfaces
-│   │   │   └── services/   # Servicios HTTP y lógica compartida
-│   │   ├── index.html
-│   │   ├── main.ts
-│   │   └── styles.css
-│   ├── angular.json
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── tsconfig.app.json
-├── sql/
-│   ├── 01_crear_base_y_datos.sql
-│   ├── 02_datos_semilla.sql
-│   └── 03_justificaciones.sql
-├── .gitignore
-└── README.md
-```
-
-Las carpetas `node_modules`, `.angular`, `dist`, `out-tsc` y los archivos `.env` son archivos locales y no deben subirse al repositorio.
 
 ---
 
@@ -78,76 +35,6 @@ La distribución se realiza entre cinco integrantes. Cada integrante es responsa
 | **Diego Reynoso** | Planilla docente de asistencia | Pantalla `/asistencia-docente`: selección de comisión y fecha, carga de estados `P`, `A`, `T`, `R` y cierre de planilla. | `PUT /api/asistencias/planilla` y `POST /api/clases/:id/cerrar`. Guardado en bloque y control de cierre mediante transacción. | `feature/planilla-asistencia` |
 | **Noelia Cosio** | Panel de asistencia del alumno | Pantalla `/mis-asistencias`: porcentaje acumulado, faltas computadas y detalle por fecha. | `GET /api/asistencias/alumno/:id`. Consultas relacionales y cálculo del porcentaje de asistencia. | `feature/consulta-asistencias` |
 | **Francisco Millan** | Circuito de justificaciones y API de feriados | Pantallas `/justificaciones` y `/revision-justificaciones`, más el servicio de feriados. | `POST /api/justificaciones` y `PATCH /api/justificaciones/:id/revisar`. Cambio de estados y revisión administrativa. | `feature/justificaciones-feriados` |
-
-### Detalle por integrante
-
-#### Yesi — Autenticación, sesión y roles
-
-- Crear `LoginComponent` para la ruta `/login`.
-- Incorporar validaciones del formulario.
-- Implementar `AuthService` para administrar la sesión y el usuario actual.
-- Implementar `RolGuard` para proteger rutas según los roles `ADMIN`, `DOCENTE` y `ALUMNO`.
-- Crear las capas de autenticación: router, controller, service y repository.
-- Consultar la tabla `usuarios` de SQL Server.
-- Implementar:
-  - `POST /api/auth/login`
-  - `GET /api/auth/perfil`
-
-#### Faus — Gestión de comisiones e inscripciones
-
-- Crear `ComisionesComponent` para `/comisiones`.
-- Permitir alta y edición de comisiones.
-- Asignar materia, docente, ciclo lectivo y alumnos.
-- Administrar los estados:
-  - `BORRADOR`
-  - `ACTIVA`
-  - `CERRADA`
-- Crear las capas de comisiones: router, controller, service y repository.
-- Implementar como mínimo:
-  - `GET /api/comisiones`
-  - `POST /api/comisiones`
-
-#### Diego — Planilla docente de asistencia
-
-- Crear `AsistenciaDocenteComponent` para `/asistencia-docente`.
-- Seleccionar comisión y fecha.
-- Mostrar los alumnos inscriptos.
-- Registrar los estados `P`, `A`, `T` y `R`.
-- Guardar la planilla en bloque.
-- Impedir modificaciones cuando la clase esté cerrada.
-- Implementar:
-  - `PUT /api/asistencias/planilla`
-  - `POST /api/clases/:id/cerrar`
-
-#### Noe — Consulta de asistencia del alumno
-
-- Crear `MisAsistenciasComponent` para `/mis-asistencias`.
-- Mostrar las comisiones cursadas.
-- Mostrar clases dictadas, presentes, ausencias, tardanzas y retiros.
-- Mostrar porcentaje de asistencia y detalle cronológico.
-- Implementar el endpoint:
-  - `GET /api/asistencias/alumno/:id`
-- Resolver el cálculo mediante el servicio y las consultas necesarias al repositorio.
-
-#### Fran — Justificaciones y API de feriados
-
-- Crear `JustificacionesComponent` para `/justificaciones`.
-- Permitir seleccionar una ausencia, tardanza o retiro justificable.
-- Registrar motivo y comprobante.
-- Crear `RevisionJustificacionesComponent` para `/revision-justificaciones`.
-- Permitir aprobar o rechazar solicitudes con observaciones.
-- Implementar:
-  - `POST /api/justificaciones`
-  - `PATCH /api/justificaciones/:id/revisar`
-- Incorporar `FeriadosService` para consultar la API pública de feriados nacionales:
-
-```text
-GET https://api.argentinadatos.com/v1/feriados/{año}
-```
-
-La API externa de feriados es una funcionalidad complementaria y no reemplaza el endpoint propio conectado a SQL Server.
-
----
 
 ## Funcionalidades previstas
 
@@ -206,7 +93,6 @@ Los scripts deben ejecutarse en el siguiente orden desde SQL Server Management S
 
 1. `sql/01_crear_base_y_datos.sql`
 2. `sql/02_datos_semilla.sql`
-3. `sql/03_justificaciones.sql` (tabla `justificaciones` y estados `AJ`, `TJ`, `RJ`)
 
 El esquema contempla inicialmente las tablas:
 
@@ -246,7 +132,6 @@ Ejecutar en SQL Server:
 ```text
 sql/01_crear_base_y_datos.sql
 sql/02_datos_semilla.sql
-sql/03_justificaciones.sql
 ```
 
 ### Configurar y ejecutar el backend
@@ -305,37 +190,3 @@ npm run build
 ```
 
 ---
-
-## Trabajo colaborativo con Git
-
-Cada integrante debe trabajar en su rama de funcionalidad correspondiente y realizar commits claros y frecuentes.
-
-Flujo sugerido:
-
-```bash
-git checkout -b feature/nombre-de-la-funcionalidad
-git add .
-git commit -m "feat: describe el cambio realizado"
-git push -u origin feature/nombre-de-la-funcionalidad
-```
-
-Las ramas de trabajo deben integrarse mediante Pull Requests, manteniendo un historial que permita identificar la participación de cada integrante.
-
-Antes de actualizar dependencias o ejecutar migraciones importantes, se recomienda verificar que el repositorio esté limpio:
-
-```bash
-git status
-git add -A
-git commit -m "Punto de control antes de actualizar dependencias"
-```
-## Flujo de trabajo con ramas
-
-Para evitar que los cambios de un integrante afecten el trabajo de los demás, el proyecto utiliza tres niveles de ramas:
-
-```text
-main
-  └── develop
-        └── feature/nombre-de-la-funcionalidad
-
-
-Las funcionalidades deben marcarse como implementadas en la documentación únicamente después de ser desarrolladas, probadas y conectadas con la base de datos.
