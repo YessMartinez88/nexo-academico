@@ -18,4 +18,7 @@ export class AsistenciaService {
     public guardarPlanillaService(planilla: Planilla): Observable<AsistenciaGuardada[]> {
         return this._httpClient.post<AsistenciaGuardada[]>(`${this._url}/asistencias/planilla`, planilla);
     }
+    public obtenerAsistenciasAlumno(idAlumno: number | string): Observable<any> {
+        return this._httpClient.get<any>(`${this._url}/asistencias/alumno/${idAlumno}`);
+    }
 }

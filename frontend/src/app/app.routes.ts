@@ -1,13 +1,8 @@
-import { Routes } from "@angular/router";
+import { Routes } from '@angular/router';
+import { MisAsistenciasComponent } from './components/mis-asistencias/mis-asistencias.component';
+
 export const routes: Routes = [
-    { path: "", redirectTo: "comisiones", pathMatch: "full" },
-    { path: "comisiones", loadComponent: () => import("./components/comisiones/comisiones").then((m) => m.Comisiones) },
-    {
-        path: "asistencia-docente",
-        loadComponent: () =>
-            import("./components/planilla-asistencia/planilla-asistencia.component").then(
-                (m) => m.PlanillaAsistenciaComponent,
-            ),
-    },
-    { path: "**", redirectTo: "comisiones" },
+  { path: 'mis-asistencias', component: MisAsistenciasComponent },
+  { path: '', redirectTo: 'mis-asistencias', pathMatch: 'full' },
+  { path: '**', redirectTo: 'mis-asistencias' }
 ];

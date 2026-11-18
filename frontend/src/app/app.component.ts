@@ -1,14 +1,15 @@
-import { Component, ChangeDetectionStrategy } from "@angular/core";
-import { RouterOutlet, RouterLink } from "@angular/router";
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { MisAsistenciasComponent } from './components/mis-asistencias/mis-asistencias.component';
 
 @Component({
-    selector: "app-root",
-    standalone: true,
-    imports: [RouterOutlet, RouterLink],
-    templateUrl: "./app.component.html",
-    changeDetection: ChangeDetectionStrategy.Eager,
-    styleUrls: ["./app.component.css"],
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, MisAsistenciasComponent],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    title = "Nexo-Academico";
+  title = 'frontend';
 }

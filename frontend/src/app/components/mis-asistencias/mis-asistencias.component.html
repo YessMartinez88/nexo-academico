@@ -1,0 +1,40 @@
+<div class="container py-4">
+  <h2 class="mb-3 text-dark">Mis Asistencias</h2>
+
+  @if (cargando) {
+    <p class="text-muted">Cargando datos...</p>
+  } @else if (errorMsg) {
+    <div class="alert alert-danger" role="alert">
+      {{ errorMsg }}
+    </div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Materia</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of datosAsistencia.asistencias; track item.fecha) {
+            <tr>
+              <td>{{ item.fecha }}</td>
+              <td>{{ item.materia }}</td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'bg-success': item.estado === 'Presente',
+                  'bg-warning text-dark': item.estado === 'Tardanza',
+                  'bg-danger': item.estado === 'Ausente'
+                }">
+                  {{ item.estado }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
