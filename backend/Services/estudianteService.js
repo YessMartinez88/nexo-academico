@@ -1,4 +1,4 @@
-const estudianteRepo = require('../Repositories/estudianteRepository.js');
+const estudianteRepo = require("../Repositories/estudianteRepository.js");
 
 async function listarEstudiantes(comisionId) {
     if (comisionId == undefined) {

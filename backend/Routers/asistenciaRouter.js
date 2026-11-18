@@ -3,8 +3,8 @@ const { Router } = require('express');
 const { postAsistencia, postPlanilla, getAsistenciasPorAlumno } = require('../Controllers/asistenciaController.js');
 const router = Router();
 
-router.post('/', postAsistencia); 
-router.post('/planilla', postPlanilla);
+router.post("/", postAsistencia);
+router.post("/planilla", postPlanilla);
 
 router.get('/alumno/:alumnoId', getAsistenciasPorAlumno);
 

@@ -1,27 +1,22 @@
 const queries = {
-  // Comisiones
-  obtenerComisiones: 'SELECT * FROM comisiones ORDER BY creado_en DESC',
-  crearComision: `
+    obtenerComisiones: "SELECT * FROM comisiones ORDER BY creado_en DESC",
+    crearComision: `
     INSERT INTO comisiones (materia, docente_id, ciclo_lectivo, estado)
     VALUES (@materia, @docenteId, @cicloLectivo, @estado)
   `,
 
-  /**
-   * -------- QUERYS ASISTENCIAS ----------------
-   */
-  obtenerAsistenciasPorAlumno: `
+    obtenerAsistenciasPorAlumno: `
     SELECT a.*, c.fecha, c.comision_id
     FROM asistencias a
     INNER JOIN clases c ON a.clase_id = c.id
     WHERE a.alumno_id = @alumnoId
   `,
 
-  // Justificaciones
-  crearJustificacion: `
+    crearJustificacion: `
     INSERT INTO justificaciones (id, registro_asistencia_id, alumno_id, motivo, archivo_url)
     VALUES (@id, @registroAsistenciaId, @alumnoId, @motivo, @archivoUrl)
   `,
-  revisarJustificacion: `
+    revisarJustificacion: `
     UPDATE justificaciones
     SET estado = @estado,
         observacion_admin = @observacionAdmin,
@@ -29,7 +24,7 @@ const queries = {
     WHERE id = @id
   `,
 
-  obtenerUsuarioPorEmail: `
+    obtenerUsuarioPorEmail: `
   SELECT
     id,
     nombre,
@@ -42,42 +37,36 @@ const queries = {
   WHERE email = @email
 `,
 
-
-  /**
-   *   --------   QUERYS ESTUDIANTES  ----------------
-   */
-  obtenerEstudiantes: `   
+    obtenerEstudiantes: `
     SELECT id, nombre, apellido, email, rol, activo
     FROM usuarios
-    WHERE 
+    WHERE
       rol = 'ALUMNO' AND activo = 1
     ORDER BY apellido, nombre
   `,
 
-  obtenerEstudiantePorId:
-    `
+    obtenerEstudiantePorId: `
     SELECT id, nombre, apellido, email, rol, activo
     FROM usuarios
-    WHERE 
+    WHERE
       id = @id AND rol = 'ALUMNO'
   `,
 
-  obtenerEstudiantesPorComision: `
+    obtenerEstudiantesPorComision: `
     SELECT u.id, u.nombre, u.apellido, u.email, u.rol, u.activo
     FROM inscripciones_comision i
     INNER JOIN usuarios u ON u.id = i.alumno_id
-    WHERE 
-      i.comision_id = @comisionId 
+    WHERE
+      i.comision_id = @comisionId
       AND u.activo = 1
     ORDER BY u.apellido, u.nombre
   `,
 
-  crearAsistencia: `
+    crearAsistencia: `
     INSERT INTO asistencias (clase_id, alumno_id, estado)
     OUTPUT INSERTED.id, INSERTED.clase_id, INSERTED.alumno_id, INSERTED.estado
     VALUES (@claseId, @alumnoId, @estado)
-  `
-
+  `,
 };
 
 module.exports = { queries };

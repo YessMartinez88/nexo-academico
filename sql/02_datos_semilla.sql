@@ -1,7 +1,6 @@
 USE sistema_asistencia;
 GO
 
--- 1. Usuarios -------------------------------------------------------------
 SET IDENTITY_INSERT usuarios ON;
 INSERT INTO usuarios (id, nombre, apellido, email, rol, activo, password_hash) VALUES
 ( 1, 'Martina',   'Costa',     'adm1@instituto.edu.ar',  'ADMIN',   1, 'Abc123!'),
@@ -21,7 +20,6 @@ INSERT INTO usuarios (id, nombre, apellido, email, rol, activo, password_hash) V
 SET IDENTITY_INSERT usuarios OFF;
 GO
 
--- 2. Comisiones -----------------------------------------------------------
 SET IDENTITY_INSERT comisiones ON;
 INSERT INTO comisiones (id, materia, docente_id, ciclo_lectivo, estado) VALUES
 (1, 'Bases de Datos I',         2, '2026', 'ACTIVA'),    -- docente: Laura Méndez
@@ -34,25 +32,20 @@ GO
 
 
 INSERT INTO inscripciones_comision (comision_id, alumno_id) VALUES
--- Comisión 1: Bases de Datos I
 (1, 5), (1, 6), (1, 7), (1, 8),
-(1, 12),                         
--- Comisión 3: Frontend
+(1, 12),
 (3, 5), (3, 9), (3, 10), (3, 11),
--- Comisión 4: Backend
 (4, 6), (4, 7), (4, 9), (4, 13), (4, 14),
--- Comisión 5: Ingeniería de Software I
 (5, 8), (5, 10);
 GO
 
--- 4. Clases ---------------------------------------------------------------
 SET IDENTITY_INSERT clases ON;
 INSERT INTO clases (id, comision_id, fecha, cerrada, fecha_cierre) VALUES
 (1, 1, '2026-11-03', 1, '2026-11-03T21:00:00'),
 (2, 1, '2026-11-10', 1, '2026-11-10T21:00:00'),
-(3, 1, '2026-11-17', 0, NULL),                  
+(3, 1, '2026-11-17', 0, NULL),
 (4, 3, '2026-11-04', 1, '2026-11-04T21:00:00'),
-(5, 3, '2026-11-11', 0, NULL),                  
+(5, 3, '2026-11-11', 0, NULL),
 (6, 4, '2026-11-05', 1, '2026-11-05T21:00:00'),
 (7, 5, '2025-10-15', 1, '2025-10-15T21:00:00');
 SET IDENTITY_INSERT clases OFF;
@@ -60,17 +53,11 @@ GO
 
 
 INSERT INTO asistencias (clase_id, alumno_id, estado) VALUES
--- Clase 1: comisión 1, 03/11 (cerrada)
 (1, 5, 'P'), (1, 6, 'A'), (1, 7, 'T'), (1, 8, 'P'),
--- Clase 2: comisión 1, 10/11 (cerrada)
 (2, 5, 'P'), (2, 6, 'P'), (2, 7, 'R'), (2, 8, 'A'),
--- Clase 4: comisión 3, 04/11 (cerrada)
 (4, 5, 'P'), (4, 9, 'T'), (4, 10, 'A'), (4, 11, 'P'),
--- Clase 5: comisión 3, 11/11 (abierta, a medias: Tomás y Julieta sin cargar)
 (5, 5, 'P'), (5, 9, 'P'),
--- Clase 6: comisión 4, 05/11 (cerrada)
 (6, 6, 'P'), (6, 7, 'P'), (6, 9, 'A'), (6, 13, 'T'), (6, 14, 'R'),
--- Clase 7: comisión 5, 15/10/2025 (cerrada, comisión CERRADA)
 (7, 8, 'P'), (7, 10, 'P');
 GO
 

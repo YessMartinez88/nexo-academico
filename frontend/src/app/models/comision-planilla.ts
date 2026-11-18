@@ -1,4 +1,4 @@
 export interface ComisionPlanilla {
-    id: number,
-    materia: string
+    id: number;
+    materia: string;
 }
