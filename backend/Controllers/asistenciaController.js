@@ -2,6 +2,20 @@ const asistenciaService = require("../Services/asistenciaService.js");
 
 const ESTADOS_VALIDOS = ["P", "A", "T", "R"];
 
+async function getAsistenciasPorAlumno(req, res) {
+    try {
+        const { alumnoId } = req.params;
+
+        // Llamamos al servicio que busca las asistencias en la base de datos
+        const asistencias = await asistenciaService.obtenerAsistenciasPorAlumno(alumnoId);
+
+        return res.status(200).json(asistencias);
+    } catch (error) {
+        console.error('[asistenciaController] getAsistenciasPorAlumno:', error);
+        return res.status(500).json({ mensaje: 'Error al obtener las asistencias' });
+    }
+}
+
 async function postAsistencia(req, res) {
     try {
         const { claseId, alumnoId, estado } = req.body;
@@ -48,4 +62,4 @@ async function postPlanilla(req, res) {
     }
 }
 
-module.exports = { postAsistencia, postPlanilla };
+module.exports = { postAsistencia, postPlanilla,getAsistenciasPorAlumno };
