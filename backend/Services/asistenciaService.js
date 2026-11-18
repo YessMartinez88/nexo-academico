@@ -1,5 +1,9 @@
 const asistenciaRepo = require("../Repositories/asistenciaRepository.js");
 
+async function obtenerAsistenciasPorAlumno(alumnoId) {
+    const asistencias = await asistenciaRepo.obtenerPorAlumno(alumnoId);
+    return asistencias;
+}
 async function registrarAsistencia(claseId, alumnoId, estado) {
     const asistencia = await asistenciaRepo.crearAsistencia(claseId, alumnoId, estado);
     return asistencia;
@@ -16,4 +20,4 @@ async function registrarPlanilla(claseId, asistencias) {
     return guardadas;
 }
 
-module.exports = { registrarAsistencia, registrarPlanilla };
+module.exports = { registrarAsistencia, registrarPlanilla, obtenerAsistenciasPorAlumno };
