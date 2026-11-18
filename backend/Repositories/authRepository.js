@@ -1,16 +1,12 @@
-const { getDbConnection, sql } = require('../database/conexion.js');
+const { getDbConnection, sql } = require("../database/conexion.js");
 
-// Busca al usuario por su email para verificar credenciales en el login
 async function buscarUsuarioPorEmail(email) {
-  const pool = await getDbConnection();
-  if (!pool) return null;
+    const pool = await getDbConnection();
+    if (!pool) return null;
 
-  try {
-    const result = await pool
-      .request()
-      .input('email', sql.VarChar(100), email)
-      .query(`
-        SELECT 
+    try {
+        const result = await pool.request().input("email", sql.VarChar(100), email).query(`
+        SELECT
           id,
           nombre,
           apellido,
@@ -22,24 +18,20 @@ async function buscarUsuarioPorEmail(email) {
         WHERE email = @email
       `);
 
-    return result.recordset[0] || null;
-  } catch (error) {
-    console.error('[authRepository] Error en buscarUsuarioPorEmail:', error);
-    return null;
-  }
+        return result.recordset[0] || null;
+    } catch (error) {
+        console.error("[authRepository] Error en buscarUsuarioPorEmail:", error);
+        return null;
+    }
 }
 
-// Busca al usuario por ID para devolver los datos del perfil
 async function buscarUsuarioPorId(id) {
-  const pool = await getDbConnection();
-  if (!pool) return null;
+    const pool = await getDbConnection();
+    if (!pool) return null;
 
-  try {
-    const result = await pool
-      .request()
-      .input('id', sql.Int, Number(id))
-      .query(`
-        SELECT 
+    try {
+        const result = await pool.request().input("id", sql.Int, Number(id)).query(`
+        SELECT
           id,
           nombre,
           apellido,
@@ -50,11 +42,11 @@ async function buscarUsuarioPorId(id) {
         WHERE id = @id
       `);
 
-    return result.recordset[0] || null;
-  } catch (error) {
-    console.error('[authRepository] Error en buscarUsuarioPorId:', error);
-    return null;
-  }
+        return result.recordset[0] || null;
+    } catch (error) {
+        console.error("[authRepository] Error en buscarUsuarioPorId:", error);
+        return null;
+    }
 }
 
 module.exports = { buscarUsuarioPorEmail, buscarUsuarioPorId };

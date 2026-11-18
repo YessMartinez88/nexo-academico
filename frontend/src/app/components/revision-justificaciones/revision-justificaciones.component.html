@@ -1,0 +1,120 @@
+<div class="container py-4">
+    <h2 class="mb-1">Revisión de justificaciones</h2>
+    <p class="text-body-secondary mb-4">
+        Al aprobar, la asistencia pasa a su estado justificado (A -> AJ, T -> TJ, R -> RJ). Para rechazar hay que dejar
+        una observación.
+    </p>
+
+    <ul class="nav nav-pills mb-4">
+        @for (f of filtros; track f.texto) {
+            <li class="nav-item">
+                <button
+                    type="button"
+                    class="nav-link"
+                    [class.active]="filtro() === f.valor"
+                    [attr.aria-current]="filtro() === f.valor ? 'page' : null"
+                    (click)="cambiarFiltro(f.valor)"
+                >
+                    {{ f.texto }}
+                </button>
+            </li>
+        }
+    </ul>
+
+    @if (mensajeOk()) {
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {{ mensajeOk() }}
+            <button type="button" class="btn-close" aria-label="Cerrar" (click)="mensajeOk.set(null)"></button>
+        </div>
+    }
+    @if (mensajeError()) {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ mensajeError() }}
+            <button type="button" class="btn-close" aria-label="Cerrar" (click)="mensajeError.set(null)"></button>
+        </div>
+    }
+
+    @if (cargando()) {
+        <div class="d-flex align-items-center gap-2 text-body-secondary">
+            <div class="spinner-border spinner-border-sm" role="status"></div>
+            Cargando...
+        </div>
+    } @else {
+        @for (j of justificaciones(); track j.id) {
+            <div class="card mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span class="fw-semibold">{{ j.alumno }}</span>
+                    <span class="badge {{ claseEstadoJustificacion[j.estado] }}">{{ j.estado }}</span>
+                </div>
+
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-3">Clase</dt>
+                        <dd class="col-sm-9">
+                            {{ j.fechaClase | date: "dd/MM/yyyy" : "UTC" }} - {{ j.materia }} -
+                            {{ etiquetas[j.estadoAsistencia] }}
+                        </dd>
+
+                        <dt class="col-sm-3">Motivo</dt>
+                        <dd class="col-sm-9">{{ j.motivo }}</dd>
+
+                        <dt class="col-sm-3">Comprobante</dt>
+                        <dd class="col-sm-9">
+                            @if (j.archivoUrl) {
+                                <a [href]="j.archivoUrl" target="_blank" rel="noopener noreferrer">Ver comprobante</a>
+                            } @else {
+                                -
+                            }
+                        </dd>
+
+                        <dt class="col-sm-3">Solicitada</dt>
+                        <dd class="col-sm-9">{{ j.fechaSolicitud | date: "dd/MM/yyyy HH:mm" }}</dd>
+
+                        @if (j.fechaRevision) {
+                            <dt class="col-sm-3">Revisada</dt>
+                            <dd class="col-sm-9">{{ j.fechaRevision | date: "dd/MM/yyyy HH:mm" }}</dd>
+                        }
+                        @if (j.observacionAdmin) {
+                            <dt class="col-sm-3">Observación</dt>
+                            <dd class="col-sm-9">{{ j.observacionAdmin }}</dd>
+                        }
+                    </dl>
+                </div>
+
+                @if (j.estado === "PENDIENTE") {
+                    <div class="card-footer">
+                        <label [for]="'obs-' + j.id" class="form-label">Observación</label>
+                        <textarea
+                            [id]="'obs-' + j.id"
+                            class="form-control mb-2"
+                            rows="2"
+                            maxlength="500"
+                            [(ngModel)]="observaciones[j.id]"
+                            placeholder="Obligatoria para rechazar"
+                        ></textarea>
+                        <div class="d-flex gap-2">
+                            <button
+                                type="button"
+                                class="btn btn-success"
+                                [disabled]="procesandoId() === j.id"
+                                (click)="revisar(j, 'APROBADA')"
+                            >
+                                Aprobar
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-outline-danger"
+                                [disabled]="procesandoId() === j.id"
+                                (click)="revisar(j, 'RECHAZADA')"
+                            >
+                                Rechazar
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        } @empty {
+            <div class="alert alert-info">No hay solicitudes para mostrar.</div>
+        }
+    }
+</div>

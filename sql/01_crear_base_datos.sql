@@ -33,7 +33,7 @@ CREATE TABLE comisiones (
     docente_id INT NOT NULL,
     ciclo_lectivo VARCHAR(10) NOT NULL,
     estado VARCHAR(20) NOT NULL DEFAULT 'BORRADOR' CHECK (estado IN ('BORRADOR', 'ACTIVA', 'CERRADA')),
-    creado_en DATETIME2 NOT NULL DEFAULT SYSDATETIME(),  
+    creado_en DATETIME2 NOT NULL DEFAULT SYSDATETIME(),
     CONSTRAINT FK_comisiones_docente FOREIGN KEY (docente_id) REFERENCES usuarios(id)
 );
 GO

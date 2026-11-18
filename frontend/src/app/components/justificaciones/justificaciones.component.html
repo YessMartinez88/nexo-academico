@@ -1,0 +1,153 @@
+<div class="container py-4">
+    <h2 class="mb-1">Solicitar justificación</h2>
+    <p class="text-body-secondary mb-4">
+        Elegí una ausencia, tardanza o retiro anticipado y contá el motivo. La solicitud la revisa administración.
+    </p>
+
+    @if (alumnoLogueado(); as alumno) {
+        <p class="mb-4"><strong>Alumno:</strong> {{ alumno.apellido }}, {{ alumno.nombre }}</p>
+    } @else {
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <label for="alumno" class="form-label">Alumno</label>
+                <select id="alumno" class="form-select" #alumnoSelect (change)="seleccionarAlumno(alumnoSelect.value)">
+                    <option value="">Elegí un alumno</option>
+                    @for (alumno of alumnos(); track alumno.id) {
+                        <option [value]="alumno.id">{{ alumno.apellido }}, {{ alumno.nombre }}</option>
+                    }
+                </select>
+            </div>
+        </div>
+    }
+
+    @if (mensajeOk()) {
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {{ mensajeOk() }}
+            <button type="button" class="btn-close" aria-label="Cerrar" (click)="mensajeOk.set(null)"></button>
+        </div>
+    }
+    @if (mensajeError()) {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ mensajeError() }}
+            <button type="button" class="btn-close" aria-label="Cerrar" (click)="mensajeError.set(null)"></button>
+        </div>
+    }
+
+    @if (!alumnoId()) {
+        <div class="alert alert-info">Elegí un alumno para ver sus inasistencias.</div>
+    } @else if (cargando()) {
+        <div class="d-flex align-items-center gap-2 text-body-secondary">
+            <div class="spinner-border spinner-border-sm" role="status"></div>
+            Cargando...
+        </div>
+    } @else {
+        <div class="card mb-4">
+            <div class="card-header fw-semibold">Nueva solicitud</div>
+            <div class="card-body">
+                @if (justificables().length === 0) {
+                    <p class="mb-0 text-body-secondary">No tenés inasistencias pendientes de justificar.</p>
+                } @else {
+                    <form [formGroup]="form" (ngSubmit)="enviar()" novalidate>
+                        <fieldset class="mb-3">
+                            <legend class="form-label fs-6">¿Qué querés justificar?</legend>
+                            <div class="list-group" [class.is-invalid]="campoInvalido('asistenciaId')">
+                                @for (a of justificables(); track a.asistenciaId) {
+                                    <label
+                                        class="list-group-item list-group-item-action d-flex flex-wrap align-items-center gap-2"
+                                    >
+                                        <input
+                                            class="form-check-input me-1"
+                                            type="radio"
+                                            formControlName="asistenciaId"
+                                            [value]="a.asistenciaId"
+                                        />
+                                        <span class="fw-semibold">{{ a.fecha | date: "dd/MM/yyyy" : "UTC" }}</span>
+                                        <span>{{ a.materia }}</span>
+                                        <span class="badge {{ claseEstadoAsistencia[a.estado] }}">{{
+                                            etiquetas[a.estado]
+                                        }}</span>
+                                        @if (feriadoDe(a.fecha); as feriado) {
+                                            <span class="badge text-bg-info" title="Según la API de feriados nacionales"
+                                                >Feriado: {{ feriado }}</span
+                                            >
+                                        }
+                                    </label>
+                                }
+                            </div>
+                            <div class="invalid-feedback">Elegí una asistencia.</div>
+                        </fieldset>
+
+                        <div class="mb-3">
+                            <label for="motivo" class="form-label">Motivo <span class="text-danger">*</span></label>
+                            <textarea
+                                id="motivo"
+                                class="form-control"
+                                rows="3"
+                                maxlength="500"
+                                formControlName="motivo"
+                                [class.is-invalid]="campoInvalido('motivo')"
+                                placeholder="Ej.: turno médico, trámite, paro de transporte..."
+                            ></textarea>
+                            <div class="invalid-feedback">El motivo es obligatorio (mínimo 10 caracteres).</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="archivoUrl" class="form-label"
+                                >Link al comprobante <span class="text-body-secondary">(opcional)</span></label
+                            >
+                            <input
+                                id="archivoUrl"
+                                type="url"
+                                class="form-control"
+                                formControlName="archivoUrl"
+                                [class.is-invalid]="campoInvalido('archivoUrl')"
+                                placeholder="https://drive.google.com/..."
+                            />
+                            <div class="invalid-feedback">Tiene que ser un link que empiece con http:// o https://</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" [disabled]="enviando()">
+                            @if (enviando()) {
+                                <span class="spinner-border spinner-border-sm me-1" role="status"></span> Enviando...
+                            } @else {
+                                Enviar solicitud
+                            }
+                        </button>
+                    </form>
+                }
+            </div>
+        </div>
+
+        <h3 class="h5 mb-3">Mis solicitudes</h3>
+        @if (solicitudes().length === 0) {
+            <div class="alert alert-light border">Todavía no hiciste solicitudes.</div>
+        } @else {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">Clase</th>
+                            <th scope="col">Materia</th>
+                            <th scope="col">Motivo</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Observación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (s of solicitudes(); track s.id) {
+                            <tr>
+                                <td class="text-nowrap">{{ s.fechaClase | date: "dd/MM/yyyy" : "UTC" }}</td>
+                                <td>{{ s.materia }}</td>
+                                <td>{{ s.motivo }}</td>
+                                <td>
+                                    <span class="badge {{ claseEstadoJustificacion[s.estado] }}">{{ s.estado }}</span>
+                                </td>
+                                <td>{{ s.observacionAdmin || "-" }}</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+</div>
