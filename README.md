@@ -93,6 +93,7 @@ Los scripts deben ejecutarse en el siguiente orden desde SQL Server Management S
 
 1. `sql/01_crear_base_y_datos.sql`
 2. `sql/02_datos_semilla.sql`
+3. `sql/03_justificaciones.sql`
 
 El esquema contempla inicialmente las tablas:
 
@@ -132,6 +133,7 @@ Ejecutar en SQL Server:
 ```text
 sql/01_crear_base_y_datos.sql
 sql/02_datos_semilla.sql
+sql/03_justificaciones.sql
 ```
 
 ### Configurar y ejecutar el backend

@@ -54,16 +54,20 @@ export class AuthService {
     this._router.navigate(['/login']);
   }
 
-  public redirigirSegunRolService(): void {
+  public rutaInicioService(): string {
     const rol = this.obtenerRolService();
     if (rol === 'ADMIN') {
-      this._router.navigate(['/comisiones']);
+      return '/comisiones';
     } else if (rol === 'DOCENTE') {
-      this._router.navigate(['/asistencia-docente']);
+      return '/asistencia-docente';
     } else if (rol === 'ALUMNO') {
-      this._router.navigate(['/mis-asistencias']);
-    } else {
-      this._router.navigate(['/login']);
+      // cuando este la pantalla de mis-asistencias va a ir ahi
+      return '/justificaciones';
     }
+    return '/login';
+  }
+
+  public redirigirSegunRolService(): void {
+    this._router.navigate([this.rutaInicioService()]);
   }
 }
