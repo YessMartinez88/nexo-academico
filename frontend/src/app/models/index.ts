@@ -11,6 +11,11 @@ export interface Usuario {
     rol: RolUsuario;
 }
 
+export interface UsuarioLogin {
+    email: string;
+    password: string;
+}
+
 export interface Comision {
     id: string;
     materia: string;
