@@ -1,0 +1,8 @@
+.comisiones-container {
+    width: min(90%, 1200px);
+    margin-inline: auto;
+}
+
+.text-danger {
+    font-size: 0.875rem;
+}

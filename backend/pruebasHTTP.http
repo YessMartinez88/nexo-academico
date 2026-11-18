@@ -1,0 +1,14 @@
+@baseUrl = http://localhost:3000
+### Salud
+GET {{baseUrl}}/api/health
+### Listar comisiones
+GET {{baseUrl}}/api/comisiones
+### Filtrar por estado
+GET {{baseUrl}}/api/comisiones?estado=ACTIVA
+### Filtrar por docente
+GET {{baseUrl}}/api/comisiones?docente_id=2
+### Crear una comisión
+POST {{baseUrl}}/api/comisiones
+Content-Type: application/json
+
+{"materia":"Programación Web III","docente_id":2,"ciclo_lectivo":"2026","estado":"BORRADOR"}

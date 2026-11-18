@@ -1,5 +1,5 @@
 export interface ClasePlanilla {
-    id: number,
-    comisionId: number,
-    fecha: string
+    id: number;
+    comisionId: number;
+    fecha: string;
 }
